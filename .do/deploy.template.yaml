@@ -1,0 +1,10 @@
+spec:
+  name: stripeflaskpython
+  services:
+  - name: stripeflaskpython
+    environment_slug: python
+    git:
+      branch: main
+      repo_clone_url: https://github.com/robhagopian/stripeflaskpython
+  databases:
+  - name: example-db
