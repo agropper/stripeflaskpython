@@ -3,11 +3,13 @@ from flask import Flask, render_template, request
 import stripe
 
 stripe_keys = {
-  'secret_key': os.environ['SECRET_KEY'],
-  'publishable_key': os.environ['PUBLISHABLE_KEY']
+  'secret_key': "rk_test_51DoMk3Jy4KVxLLXghZxa18FRkCK4aDV8GcoLPr2xNG8eZtTBKfE1sAQ0l4twqvPd8f5rONTu1yaTQbgHZNowNgYL00RsxL1f15",
+  'publishable_key': "pk_test_n4B7NQ3lBzJ6OHs8l9VsBWLm"
 }
 
 stripe.api_key = stripe_keys['secret_key']
+
+print(stripe.Plan.list())
 
 app = Flask(__name__)
 
