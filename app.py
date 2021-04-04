@@ -10,8 +10,8 @@ from flask import Flask, jsonify, request
 
 import stripe
 # This is your real test secret API key.
-# stripe.api_key = 'sk_test_QwhVPW60WK5gHKHdbbLEKwTi'
-stripe.api_key = 'pk_test_n4B7NQ3lBzJ6OHs8l9VsBWLm'
+stripe.api_key = 'sk_test_QwhVPW60WK5gHKHdbbLEKwTi'
+# stripe.api_key = 'pk_test_n4B7NQ3lBzJ6OHs8l9VsBWLm'
 
 print(stripe.Plan.list(limit=1))
 
@@ -19,7 +19,7 @@ app = Flask(__name__,
             static_url_path='',
             static_folder='.')
 
-YOUR_DOMAIN = 'http://localhost:4242'
+YOUR_DOMAIN = 'https://stripeflaskpython-y6hf5.ondigitalocean.app'
 
 @app.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
