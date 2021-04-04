@@ -1,39 +1,53 @@
+#! /usr/bin/env python3.6
+
+"""
+server.py
+Stripe Sample.
+Python 3.6 or newer required.
+"""
 import os
-from flask import Flask, render_template, request
+from flask import Flask, jsonify, request
+
 import stripe
+# This is your real test secret API key.
+stripe.api_key = 'sk_test_QwhVPW60WK5gHKHdbbLEKwTi'
+# stripe.api_key = 'pk_test_n4B7NQ3lBzJ6OHs8l9VsBWLm'
 
-stripe_keys = {
-  'secret_key': "rk_test_51DoMk3Jy4KVxLLXghZxa18FRkCK4aDV8GcoLPr2xNG8eZtTBKfE1sAQ0l4twqvPd8f5rONTu1yaTQbgHZNowNgYL00RsxL1f15",
-  'publishable_key': "pk_test_n4B7NQ3lBzJ6OHs8l9VsBWLm"
-}
+print(stripe.Plan.list(limit=1))
 
-stripe.api_key = stripe_keys['secret_key']
+app = Flask(__name__,
+            static_url_path='',
+            static_folder='.')
 
-print(stripe.Plan.list())
+YOUR_DOMAIN = 'http://localhost:4242'
 
-app = Flask(__name__)
+@app.route('/create-checkout-session', methods=['POST'])
+def create_checkout_session():
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[
+                {
+                    'price_data': {
+                        'currency': 'usd',
+                        'unit_amount': 2000,
+                        'product_data': {
+                            'name': 'Stubborn Attachments',
+                            'images': ['https://i.imgur.com/EHyR2nP.png'],
+                        },
+                    },
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url=YOUR_DOMAIN + '/success.html',
+            cancel_url=YOUR_DOMAIN + '/cancel.html',
+        )
+        return jsonify({'id': checkout_session.id})
+    except Exception as e:
+        return jsonify(error=str(e)), 403
 
-@app.route('/')
-def index():
-  return render_template('index.html', key=stripe_keys['publishable_key'])
-
-@app.route('/charge', methods=['POST'])
-def charge():
-  amount = 500
-
-  customer = stripe.Customer.create(
-      email='customer@example.com',
-      card=request.form['stripeToken']
-  )
-
-  charge = stripe.Charge.create(
-      customer=customer.id,
-      amount=amount,
-      currency='usd',
-      description='Flask Charge'
-  )
-
-  return render_template('charge.html', amount=amount)
 
 if __name__ == '__main__':
-  app.run(debug=True)
+    app.run(port=4242)
+
