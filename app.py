@@ -10,8 +10,8 @@ from flask import Flask, jsonify, request
 
 import stripe
 # This is your real test secret API key.
-stripe.api_key = 'sk_test_QwhVPW60WK5gHKHdbbLEKwTi'
-# stripe.api_key = 'pk_test_n4B7NQ3lBzJ6OHs8l9VsBWLm'
+# stripe.api_key = 'sk_test_QwhVPW60WK5gHKHdbbLEKwTi'
+stripe.api_key = 'pk_test_n4B7NQ3lBzJ6OHs8l9VsBWLm'
 
 print(stripe.Plan.list(limit=1))
 
