@@ -1,3 +1,5 @@
+This commit works locally on my Mac venv but it doesn't yet do the new Checkout.
+
 # Getting Started
 
 These steps will get this sample Flask application running for you using DigitalOcean App Platform.
